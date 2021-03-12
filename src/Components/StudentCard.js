@@ -19,15 +19,21 @@ const useStyles = makeStyles({
   },
 });
 
-export default function StudentCard() {
+export default function StudentCard({ student }) {
+  const { pictures, name, id } = student;
+
+  const { src } = pictures;
+
+  console.log("student", student);
+
   const classes = useStyles();
 
   return (
-    <Grid item xs={6} sm={3}>
-      <Link to="/detail">
+    <Grid item xs={12} sm={3}>
+      <Link to={`/detail/${id}`}>
         <Card className={classes.root}>
           <CardActionArea>
-            <CardMedia className={classes.media} image={image} title="Brain" />
+            <CardMedia className={classes.media} image={src} title="Brain" />
             <CardContent>
               <Typography
                 align="center"
@@ -35,7 +41,7 @@ export default function StudentCard() {
                 variant="h5"
                 component="h2"
               >
-                Brain
+                {name}
               </Typography>
             </CardContent>
           </CardActionArea>

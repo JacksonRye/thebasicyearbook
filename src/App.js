@@ -3,21 +3,24 @@ import SearchAppBar from "./Header";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import SimpleContainer from "./Components/SimpleContainer";
 import { StudentDetail } from "./Components/StudentDetail";
+import { GlobalProvider } from "./context/GlobalState";
 
 const routes = [
   { path: "/", name: "StudentList", Component: SimpleContainer },
-  { path: "/detail", name: "StudentDetail", Component: StudentDetail },
+  { path: "/detail/:id", name: "StudentDetail", Component: StudentDetail },
 ];
 function App() {
   return (
-    <div className="App">
-      <SearchAppBar />
-      <Router>
-        {routes.map(({ path, Component }) => (
-          <Route key={path} exact path={path} component={Component} />
-        ))}
-      </Router>
-    </div>
+    <GlobalProvider>
+      <div className="App">
+        <SearchAppBar />
+        <Router>
+          {routes.map(({ path, Component }) => (
+            <Route key={path} exact path={path} component={Component} />
+          ))}
+        </Router>
+      </div>
+    </GlobalProvider>
   );
 }
 
