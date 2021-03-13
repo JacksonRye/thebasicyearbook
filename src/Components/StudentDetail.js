@@ -8,7 +8,7 @@ import {
 import React, { useContext, useEffect } from "react";
 import Image from "material-ui-image";
 
-import image from "./img/brain.jpeg";
+
 import { GlobalContext } from "../context/GlobalState";
 
 const useStyles = makeStyles((theme) => ({

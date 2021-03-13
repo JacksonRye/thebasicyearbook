@@ -8,14 +8,14 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import image from "./img/brain.jpeg";
+
 
 const useStyles = makeStyles({
   root: {
     width: "100%",
   },
   media: {
-    height: "20vh",
+    height: "25vh",
   },
 });
 
@@ -29,7 +29,7 @@ export default function StudentCard({ student }) {
   const classes = useStyles();
 
   return (
-    <Grid item xs={12} sm={3}>
+    <Grid item xs={6} sm={3}>
       <Link to={`/detail/${id}`}>
         <Card className={classes.root}>
           <CardActionArea>

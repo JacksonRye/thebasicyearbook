@@ -1,6 +1,6 @@
-import "./App.css";
-import SearchAppBar from "./Header";
+
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import SearchAppBar from "./Components/Header";
 import SimpleContainer from "./Components/SimpleContainer";
 import { StudentDetail } from "./Components/StudentDetail";
 import { GlobalProvider } from "./context/GlobalState";

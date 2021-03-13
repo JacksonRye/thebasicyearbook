@@ -25,7 +25,7 @@ export const GlobalProvider = ({ children }) => {
   function getStudents() {
     let students;
 
-    studentQuery.limit(limit).onSnapshot((snapshot) => {
+    studentQuery.onSnapshot((snapshot) => {
       students = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
