@@ -1,5 +1,5 @@
 import {
-  Card,
+  CircularProgress,
   Container,
   CssBaseline,
   makeStyles,
@@ -7,7 +7,6 @@ import {
 } from "@material-ui/core";
 import React, { useContext, useEffect } from "react";
 import Image from "material-ui-image";
-
 
 import { GlobalContext } from "../context/GlobalState";
 
@@ -45,10 +44,8 @@ export const StudentDetail = ({ match }) => {
     phone_no,
   } = student;
 
-  console.log("id -detail", student);
-
   return loading ? (
-    <h1>Loading</h1>
+    <CircularProgress />
   ) : (
     <React.Fragment>
       <CssBaseline />

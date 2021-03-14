@@ -8,6 +8,7 @@ const initialState = {
   studentList: [],
   loading: true,
   lastStudent: null,
+  moreStudents: true,
 };
 
 export const GlobalContext = createContext(initialState);
@@ -15,7 +16,7 @@ export const GlobalContext = createContext(initialState);
 export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
-  const limit = 2;
+  const limit = 4;
 
   const studentQuery = firebase
     .firestore()
@@ -25,12 +26,11 @@ export const GlobalProvider = ({ children }) => {
   function getStudents() {
     let students;
 
-    studentQuery.onSnapshot((snapshot) => {
+    studentQuery.limit(limit).onSnapshot((snapshot) => {
       students = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-      console.log(students);
       dispatch({ type: "UPDATE_STUDENT_LIST", payload: students });
     });
   }
@@ -46,8 +46,6 @@ export const GlobalProvider = ({ children }) => {
       payload: student,
     });
 
-    console.log("id", student);
-
     setLoading(false);
   }
 
@@ -58,14 +56,44 @@ export const GlobalProvider = ({ children }) => {
     });
   }
 
+  function getMoreStudents(snapshot) {
+
+    const last = snapshot.docs[snapshot.docs.length - 1];
+    dispatch({ type: "SET_LAST_STUDENT", payload: last });
+    const newStudents = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    const studentList = [...state.studentList, ...newStudents];
+
+    dispatch({ type: "UPDATE_STUDENT_LIST", payload: studentList });
+
+
+
+  }
+
+ 
+
+  function nextStudents() {
+    studentQuery
+      .startAfter(state.lastStudent)
+      .limit(limit)
+      .onSnapshot((snapshot) => {
+        snapshot.empty ? console.log("complete") : getMoreStudents(snapshot);
+      });
+  }
+
   return (
     <GlobalContext.Provider
       value={{
         studentList: state.studentList,
         loading: state.loading,
         student: state.student,
+        moreStudents: state.moreStudents,
         getStudents,
         getStudentById,
+        nextStudents,
         setLoading,
       }}
     >
